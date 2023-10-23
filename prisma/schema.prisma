@@ -9,3 +9,144 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Level {
+  Beginning
+  Intermediate
+  Advanced
+}
+
+enum Status {
+  Not_Started
+  In_Progress
+  Completed
+}
+
+model Kategori {
+  id     Int      @id @default(autoincrement())
+  nama   String
+  Course Course[]
+}
+
+model Course {
+  id    Int    @id @default(autoincrement())
+  nama  String
+  level Level  @default(Beginning)
+
+  kategori_id Int
+  kategori    Kategori?     @relation(fields: [kategori_id], references: [id])
+  Topic       Topic[]
+  Take_Course Take_Course[]
+}
+
+model Topic {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  course_id          Int
+  course             Course?              @relation(fields: [course_id], references: [id])
+  Sub_Topic          Sub_Topic[]
+  Kuis               Kuis[]
+  Detail_Take_Course Detail_Take_Course[]
+}
+
+model Sub_Topic {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  topic_id           Int
+  topic              Topic?               @relation(fields: [topic_id], references: [id])
+  Sub_Sub_Topic      Sub_Sub_Topic[]
+  Detail_Take_Course Detail_Take_Course[]
+}
+
+model Sub_Sub_Topic {
+  id             Int      @id @default(autoincrement())
+  title          String
+  content        String
+  detail_content String[] @default([])
+  image_link     String[] @default([])
+
+  sub_topic_id       Int
+  sub_topic          Sub_Topic?           @relation(fields: [sub_topic_id], references: [id])
+  Detail_Take_Course Detail_Take_Course[]
+}
+
+model Kuis {
+  id      Int      @id @default(autoincrement())
+  soal    String
+  pilihan String[]
+  jawaban String
+
+  topic_id         Int
+  topic            Topic?             @relation(fields: [topic_id], references: [id])
+  Detail_Take_Kuis Detail_Take_Kuis[]
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  name        String?
+  username    String
+  email       String
+  password    String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+  Take_Course Take_Course[]
+  Take_Kuis   Take_Kuis[]
+}
+
+model Take_Course {
+  id        Int       @id @default(autoincrement())
+  status    Status    @default(Not_Started)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user_id            Int
+  user               User?                @relation(fields: [user_id], references: [id])
+  course_id          Int
+  course             Course?              @relation(fields: [course_id], references: [id])
+  Detail_Take_Course Detail_Take_Course[]
+}
+
+model Detail_Take_Course {
+  id        Int       @id @default(autoincrement())
+  status    Status    @default(Not_Started)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  take_course_id   Int
+  take_course      Take_Course?   @relation(fields: [take_course_id], references: [id])
+  topic_id         Int
+  topic            Topic?         @relation(fields: [topic_id], references: [id])
+  sub_topic_id     Int
+  sub_topic        Sub_Topic?     @relation(fields: [sub_topic_id], references: [id])
+  sub_sub_topic_id Int
+  sub_sub_topic    Sub_Sub_Topic? @relation(fields: [sub_sub_topic_id], references: [id])
+}
+
+model Take_Kuis {
+  id        Int       @id @default(autoincrement())
+  status    Status    @default(Not_Started)
+  nilai     Float     @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user_id Int
+  user    User? @relation(fields: [user_id], references: [id])
+}
+
+model Detail_Take_Kuis {
+  id        Int       @id @default(autoincrement())
+  jawaban   String
+  mark      Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  kuis_id Int
+  kuis    Kuis? @relation(fields: [kuis_id], references: [id])
+}
