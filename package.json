@@ -23,7 +23,8 @@
     "studio": "npx prisma studio",
     "prepare": "husky install",
     "db:dev": "dotenv -e .env.development -- npm run migrate:dev && npm run seed:dev",
-    "setup:dev": "dotenv -e .env.development -- docker compose up -d"
+    "setup:dev": "dotenv -e .env.development -- docker compose up -d",
+    "commit": "cz"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
