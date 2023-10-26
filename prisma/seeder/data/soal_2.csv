@@ -1,0 +1,45 @@
+no,topic_id,soal,pilihan_1,pilihan_2,pilihan_3,pilihan_4,jawaban
+1,Welcome to Linux Unhatched,What does CLI stand for?,Core Learning Interface,Command Learning Interface,Core Line Interface,Command Line Interface,4
+2,Navigating Basic Command Syntax,Commands are case-sensitive.True or False?,TRUE,FALSE,,,1
+3,Navigating Basic Command Syntax,"When entering a command, do arguments or options typicallycome first?",Options,Arguments,,,1
+4,Navigating Basic Command Syntax,Which of the following is NOT a correct way to combine options?,-l -r,-lr,-r l,-rl,3
+5,Printing Working Directory,Which command will print your current location in the filesystem?,pcl,pwd,pd,cd,2
+6,Changing Directories,Which command will allow you to change your current directory?,ls,cd,ch,chdi,2
+7,Changing Directories,Which of the following is NOT an example of an absolute path?,/,/home/sysadmin,Documents,,3
+8,Changing Directories,Which of the following is NOT an example of a relative path?,Documents,/home,Documents/Work,home/sysadmin/Documents/School/Ar,2
+9,Listing Files,The ~ (tilde) character is used to represent:,A user’s home directory,"Nothing, it doesn’t have a special meaning",The current directory,The directory above the current directory,1
+10,Listing Files,The .. (double period) characters are used to represent:,A user’s home directory,The current directory,"Nothing, it doesn’t have a special",The directory above the current directory,4
+11,Listing Files,The . (period) character is used to represent:,The directory above the current directory,A user’s home directory,The current directory,"Nothing, it doesn’t have a special meaning",3
+12,Administrative Access,The ls command without options or arguments…,…lists the contents of the current directory.,…prompts for a directory to list.,…lists the contents of a user’s home.,…generates an error as this command.,1
+13,Administrative Access,The first character in a long listing ls -l indicates:,Hard Link Count,File Size,Permissions,File Type,4
+14,Administrative Access,Which option to the ls will sort the output by file size?,-z,-r,-S,-s,3
+15,Permissions,Which of these commands will create a new shell loggedin as the root user?,sudo,su,,,2
+16,Changing File Permissions,Which of the following sets has the owner permissions highlighted?,rw-rw-r–,rw-rw-r–,rw-rw-r–,rw-rw-r–,1
+17,Changing File Permissions,Which of the following sets has the group permissions highlighted?,rw-rw-r–,rw-rw-r–,rw-rw-r–,rw-rw-r–,3
+18,Changing File Permissions,Which of the following sets has the other permissions highlighted?,rw-rw-r–,rw-rw-r–,rw-rw-r–,rw-rw-r–,2
+19,Changing File Ownership,Which command will allow a user to change the permissions of a file?,perm,chown,chmod,chperm,3
+20,Changing File Ownership,Which of the following permission sets indicates the other owner has only the read permission?,rw-r–rwx,rwxrw-r-x,r–r–r-x,rw-rw-r–,4
+21,Changing File Ownership,Which of the following commands is used to change the ownership of a file?,chow,chmod,chown,chperm,3
+22,Changing File Ownership,Changing the user owner of a file requires administrativeaccess.True or False?,TRUE,FALSE,,,1
+23,Moving Files,Which of the following commands can be used to rename a file?,name,cp,rn,mv,4
+24,Viewing Files,The mv command requires at least two arguments.True or False?,TRUE,FALSE,,,1
+25,Copying Files,Which command can be used to copy a file?,mv,rm,cy,cp,4
+26,Copying Files,The cp command requires at least two arguments.True or False?,TRUE,FALSE,,,1
+27,Copying Files,Which command is used to copy files at the bit level?,cp,dd,,,2
+28,Removing Files,The rm command requires at least two arguments.True or False?,TRUE,FALSE,,,2
+29,Removing Files,Which option to the rm command will allow a user to delete directories?,-l ,-r ,-d,-a,2
+30,Filtering Input,Which of the following commands is used to filter text?,text,grep,dd,regex,2
+31,Filtering Input,Which of the following commands will return only lines that begin with test?,grep ‘^test’ file.txt,grep ‘$test’ file.txt,grep ‘*test’ file.txt,grep ‘[test]’ file.txt,1
+32,Filtering Input,Which of the following commands will return only lines that end with test?,grep ‘$test’ file.txt,grep ‘test$’ file.txt,grep ‘test^’ file.txt,grep ‘^test’ file.txt,2
+33,Filtering Input,Which of the following lines would be NOT returned by the grep ‘[^0-9]’ file.txt command?,I am 37 years old.,My favorite food is avocados. ,3121991,Hello my name is Joe.,3
+34,Filtering Input,Which of the following lines would be returned by the grep ‘b[oe]t’ file.txt command?,beet,bet,boet,boot,2
+35,Shutting Down,Which of the following commands will NOT shutdown the system immediately?,shutdown,shutdown now,shutdown now ‘Goodbye World!’,shutdown +0,2
+36,Network Configuration,Which of the following commands can be used to display network configuration information?,netconfig,pwd,ifconfig,net,3
+37,Viewing Processes,Which of the following commands will display every process?,ps -all,ps -e,ps,ps -a,2
+38,Viewing Processes,The ps command requires administrative access.True or False?,TRUE,FALSE,,,2
+39,Package Management,Which of the following commands will update all packages?,apt-get upgrade,apt-get update,apt-get install,apt-get search,1
+40,Package Management,Which of the following will delete all of a package’s files?,apt-get remove,apt-get delete,apt-get purge,apt-get trash,3
+41,Package Management,Which of the following commands should be executed before installing a package?,apt-get upgrade,apt-get update,apt-get install,apt-get search,2
+42,Updating User Passwords,Users can update their own passwords.True or False?,TRUE,FALSE,,,1
+43,Updating User Passwords,The root user can change the password of any user.True or False?,TRUE,FALSE,,,1
+44,Updating User Passwords,Which option can be used to view status information about the current user’s password?,-i,-I,-S,-s,3

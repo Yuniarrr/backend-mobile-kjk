@@ -64,7 +64,7 @@ model Sub_Sub_Topic {
   id             Int      @id @default(autoincrement())
   title          String
   content        String
-  detail_content String[] @default([])
+  detail_content Json?
   image_link     String[] @default([])
 
   sub_topic_id       Int
@@ -74,7 +74,7 @@ model Sub_Sub_Topic {
 
 model Kuis {
   id      Int      @id @default(autoincrement())
-  soal    String
+  soal    String   @db.Text
   pilihan String[]
   jawaban String
 
