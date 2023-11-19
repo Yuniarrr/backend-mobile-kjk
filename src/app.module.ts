@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from './prisma/prisma.service';
 import { CourseModule } from './course/course.module';
 import { TakeCourseModule } from './take-course/take-course.module';
+import { TakeKuisModule } from './take-kuis/take-kuis.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TakeCourseModule } from './take-course/take-course.module';
     }),
     CourseModule,
     TakeCourseModule,
+    TakeKuisModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, PrismaService],

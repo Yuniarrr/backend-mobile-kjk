@@ -118,13 +118,13 @@ model Detail_Take_Course {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  take_course_id   Int
+  take_course_id   Int?
   take_course      Take_Course?   @relation(fields: [take_course_id], references: [id])
-  topic_id         Int
+  topic_id         Int?
   topic            Topic?         @relation(fields: [topic_id], references: [id])
-  sub_topic_id     Int
+  sub_topic_id     Int?
   sub_topic        Sub_Topic?     @relation(fields: [sub_topic_id], references: [id])
-  sub_sub_topic_id Int
+  sub_sub_topic_id Int?
   sub_sub_topic    Sub_Sub_Topic? @relation(fields: [sub_sub_topic_id], references: [id])
 }
 
@@ -137,10 +137,11 @@ model Take_Kuis {
   updatedAt      DateTime  @updatedAt
   deletedAt      DateTime?
 
-  user_id  Int
-  user     User?  @relation(fields: [user_id], references: [id])
-  topic_id Int
-  topic    Topic? @relation(fields: [topic_id], references: [id])
+  user_id          Int
+  user             User?              @relation(fields: [user_id], references: [id])
+  topic_id         Int
+  topic            Topic?             @relation(fields: [topic_id], references: [id])
+  Detail_Take_Kuis Detail_Take_Kuis[]
 }
 
 model Detail_Take_Kuis {
@@ -151,6 +152,8 @@ model Detail_Take_Kuis {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  kuis_id Int
-  kuis    Kuis? @relation(fields: [kuis_id], references: [id])
+  kuis_id      Int
+  kuis         Kuis?      @relation(fields: [kuis_id], references: [id])
+  take_kuis_id Int
+  take_kuis    Take_Kuis? @relation(fields: [take_kuis_id], references: [id])
 }

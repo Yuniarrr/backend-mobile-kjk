@@ -20,4 +20,24 @@ export class CourseService {
 
     return course;
   }
+
+  async findSubTopicByTopic(topic_id: number) {
+    const subTopic = await this.prisma.sub_Topic.findMany({
+      where: {
+        topic_id,
+      },
+    });
+
+    return subTopic;
+  }
+
+  async findSubSubTopicBySubTopic(sub_topic_id: number) {
+    const subSubTopic = await this.prisma.sub_Sub_Topic.findMany({
+      where: {
+        sub_topic_id,
+      },
+    });
+
+    return subSubTopic;
+  }
 }

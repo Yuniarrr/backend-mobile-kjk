@@ -14,6 +14,12 @@ export class TakeCourseService {
       },
     });
 
+    await this.prisma.detail_Take_Course.create({
+      data: {
+        take_course_id: course.id,
+      },
+    });
+
     return course;
   }
 
