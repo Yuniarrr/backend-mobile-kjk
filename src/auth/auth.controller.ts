@@ -6,9 +6,10 @@ import {
   ValidationPipe,
   Body,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { CreateUserDto, LoginUserDto } from './dto/index';
+import { CreateUserDto, LoginUserDto, UpdateUserDto } from './dto/index';
 import { AuthService } from './auth.service';
 import { JwtGuard } from './guard';
 import { GetUser } from './decorators';
@@ -85,6 +86,37 @@ export class AuthController {
       };
     } catch (error) {
       console.error('Error in login AuthController:', error);
+
+      return {
+        status: 'error',
+        message: 'Internal server error',
+      };
+    }
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  @ApiOkResponse({
+    description: 'Get user by id',
+  })
+  @Patch('update')
+  async update(@GetUser('id') user_id: number, data: UpdateUserDto) {
+    try {
+      const user = await this.authService.update(user_id, data);
+
+      return {
+        status: 'success',
+        data: user,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return {
+          status: 'error',
+          message: error.message,
+        };
+      }
+
+      console.error('Error in update AuthController:', error);
 
       return {
         status: 'error',

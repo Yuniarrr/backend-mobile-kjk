@@ -8,8 +8,15 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto, LoginUserDto, GetUserByIdDto } from './dto/index';
+import {
+  CreateUserDto,
+  LoginUserDto,
+  GetUserByIdDto,
+  UpdateUserDto,
+} from './dto/index';
 import { PrismaService } from 'src/prisma/prisma.service';
+
+const salt = bcrypt.genSaltSync(12);
 
 @Injectable()
 export class AuthService {
@@ -20,7 +27,6 @@ export class AuthService {
   ) {}
 
   async createUser(data: CreateUserDto) {
-    const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(data.password, salt);
 
     const user = await this.prisma.user.create({
@@ -53,6 +59,27 @@ export class AuthService {
     const token = await this.getToken(user.id, user.email);
 
     return token;
+  }
+
+  async update(user_id: number, data: UpdateUserDto) {
+    const password = data.password;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      data.password = hashedPassword;
+    }
+
+    const user = await this.prisma.user.update({
+      where: {
+        id: user_id,
+      },
+      data: {
+        ...data,
+      },
+    });
+
+    return user;
   }
 
   async getUserById(data: GetUserByIdDto) {
