@@ -48,6 +48,7 @@ model Topic {
   Sub_Topic          Sub_Topic[]
   Kuis               Kuis[]
   Detail_Take_Course Detail_Take_Course[]
+  Take_Kuis          Take_Kuis[]
 }
 
 model Sub_Topic {
@@ -87,7 +88,7 @@ model User {
   id          Int           @id @default(autoincrement())
   name        String?
   username    String
-  email       String
+  email       String        @unique
   password    String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -128,15 +129,18 @@ model Detail_Take_Course {
 }
 
 model Take_Kuis {
-  id        Int       @id @default(autoincrement())
-  status    Status    @default(Not_Started)
-  nilai     Float     @default(0)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  id             Int       @id @default(autoincrement())
+  status         Status    @default(Not_Started)
+  nilai          Float     @default(0)
+  tgl_pengerjaan DateTime
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
 
-  user_id Int
-  user    User? @relation(fields: [user_id], references: [id])
+  user_id  Int
+  user     User?  @relation(fields: [user_id], references: [id])
+  topic_id Int
+  topic    Topic? @relation(fields: [topic_id], references: [id])
 }
 
 model Detail_Take_Kuis {
