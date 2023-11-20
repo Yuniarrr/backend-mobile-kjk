@@ -14,13 +14,16 @@ export class TakeCourseService {
       },
     });
 
-    await this.prisma.detail_Take_Course.create({
+    const detail_take_course = await this.prisma.detail_Take_Course.create({
       data: {
         take_course_id: course.id,
       },
     });
 
-    return course;
+    return {
+      ...course,
+      detail_take_course_id: detail_take_course.id,
+    };
   }
 
   async update(id: number) {

@@ -14,6 +14,7 @@ import {
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorators';
@@ -21,6 +22,9 @@ import { GetUser } from 'src/auth/decorators';
 @ApiTags('Take Course')
 @ApiBearerAuth()
 @UseGuards(JwtGuard)
+@ApiUnauthorizedResponse({
+  description: 'Unauthorized',
+})
 @Controller('take-course')
 export class TakeCourseController {
   constructor(private readonly takeCourseService: TakeCourseService) {}
@@ -29,7 +33,10 @@ export class TakeCourseController {
     description: 'Create course',
   })
   @Post(':id')
-  async create(@GetUser('id') user_id: number, @Param('id') course_id: number) {
+  async createCourse(
+    @GetUser('id') user_id: number,
+    @Param('id') course_id: number,
+  ) {
     try {
       const course = await this.takeCourseService.create(user_id, course_id);
 
@@ -58,7 +65,7 @@ export class TakeCourseController {
     description: 'Update status course',
   })
   @Patch(':id')
-  async update(@Param('id') id: number) {
+  async updateStatus(@Param('id') id: number) {
     try {
       const course = await this.takeCourseService.update(id);
 
@@ -113,7 +120,7 @@ export class TakeCourseController {
   }
 
   @ApiNoContentResponse({
-    description: 'Delete course by id',
+    description: 'Success delete course',
   })
   @ApiOkResponse({
     description: 'Delete course by id',

@@ -10,7 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { TakeKuisService } from './take-kuis.service';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorators';
 import { CreateAnswerDto } from './dto';
@@ -18,6 +23,9 @@ import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @ApiTags('Take Kuis')
 @ApiBearerAuth()
+@ApiUnauthorizedResponse({
+  description: 'Unauthorized',
+})
 @UseGuards(JwtGuard)
 @Controller('take-kuis')
 export class TakeKuisController {
@@ -161,6 +169,35 @@ export class TakeKuisController {
       return {
         status: 'success',
         data: detail_take_kuis,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return {
+          status: 'error',
+          message: error.message,
+        };
+      }
+
+      console.error('Error in finish TakeKuisController:', error);
+
+      return {
+        status: 'error',
+        message: 'Internal server error',
+      };
+    }
+  }
+
+  @ApiOkResponse({
+    description: 'Get all kuis',
+  })
+  @Get(':topic_id')
+  async getAllKuis(@Param('topic_id') topic_id: number) {
+    try {
+      const all_kuis = await this.takeKuisService.getAllKuis(topic_id);
+
+      return {
+        status: 'success',
+        data: all_kuis,
       };
     } catch (error) {
       if (error instanceof NotFoundException) {

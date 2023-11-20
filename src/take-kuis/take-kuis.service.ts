@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAnswerDto } from './dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
@@ -142,5 +142,37 @@ export class TakeKuisService {
     const mark = (totalMark / totalKuis) * 100;
 
     return mark;
+  }
+
+  async getAllKuis(topic_id: number) {
+    const isTopicExist = await this.findTopicId(topic_id);
+
+    if (!isTopicExist) {
+      throw new NotFoundException('Topic not found');
+    }
+
+    const all_kuis = await this.prisma.kuis.findMany({
+      where: {
+        topic_id,
+      },
+    });
+
+    return all_kuis.map((kuis) => {
+      return {
+        id: kuis.id,
+        pertanyaan: kuis.soal,
+        pilihan: kuis.pilihan,
+      };
+    });
+  }
+
+  async findTopicId(topic_id: number) {
+    const topic = await this.prisma.topic.findUnique({
+      where: {
+        id: topic_id,
+      },
+    });
+
+    return topic;
   }
 }

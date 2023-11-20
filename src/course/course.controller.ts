@@ -6,12 +6,20 @@ import {
   Param,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guard';
 
 @ApiTags('Course')
 @ApiBearerAuth()
 @UseGuards(JwtGuard)
+@ApiUnauthorizedResponse({
+  description: 'Unauthorized',
+})
 @Controller('course')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
@@ -48,7 +56,7 @@ export class CourseController {
   @ApiOkResponse({
     description: 'Get topic by course',
   })
-  @Get('topic/:course_id')
+  @Get(':course_id/topics')
   async findTopicByCourse(@Param('course_id') course_id: number) {
     try {
       const course = await this.courseService.findTopicByCourse(course_id);
@@ -77,7 +85,7 @@ export class CourseController {
   @ApiOkResponse({
     description: 'Get sub_topic by topic',
   })
-  @Get('sub_topic/:topic_id')
+  @Get(':topic_id/sub_topics')
   async findSubTopicByTopic(@Param('topic_id') topic_id: number) {
     try {
       const course = await this.courseService.findSubTopicByTopic(topic_id);
@@ -106,7 +114,7 @@ export class CourseController {
   @ApiOkResponse({
     description: 'Get sub_sub_topic by sub_topic',
   })
-  @Get('sub_sub_topic/:sub_topic_id')
+  @Get(':sub_topic_id/sub_sub_topics')
   async findSubSubTopicBySubTopic(@Param('sub_topic_id') sub_topic_id: number) {
     try {
       const course = await this.courseService.findSubSubTopicBySubTopic(
